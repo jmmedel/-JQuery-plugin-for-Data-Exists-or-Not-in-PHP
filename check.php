@@ -1,26 +1,36 @@
 <?php  
  //check.php  
+ require_once('config.php');
+ 
  if(isset($_POST["input_value"], $_POST["input_type"]))  
  {  
-      $connect = mysqli_connect("localhost", "root", "", "testing");  
       $type = strtolower(trim($_POST["input_type"]));  
       $value = trim($_POST["input_value"]);  
-      //$query = '';  
       if(in_array($type, array('username', 'email')))  
       {  
            if($type == 'username')  
            {  
-                $query = "SELECT * FROM tbl_register WHERE user = '$value'";  
+                $sql = "SELECT * FROM tbl_register WHERE user = ? Limit 1 ";
+                $stmtselect = $db->prepare($sql);
+                $result = $stmtselect->execute([$value]); 
+                if($result){
+                    
+                    if($stmtselect->rowCount() > 0 ){
+                
+                        echo("Username Exsit");
+                    }else{
+                        //valid
+                        echo("valid");
+                    }
+                
+                
+                }else {
+                    echo("There is a error while connecting to database");
+                } 
            }  
-           if($type == "email")  
-           {  
-                $query = "SELECT * FROM tbl_register WHERE email = '$value'";  
-           }  
-           $result = mysqli_query($connect, $query);  
-           if(mysqli_num_rows($result) > 0)  
-           {  
-                echo '* This data already exits';  
-           }  
+        
+           
       }  
+
  }  
  ?>  

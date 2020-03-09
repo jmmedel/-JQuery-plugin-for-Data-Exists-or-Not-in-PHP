@@ -1,32 +1,36 @@
-//check_availibilty.js  
-$.fn.availibilityCheck = function(){  
+//check_availibilty.js
+$.fn.availibilityCheck = function() {
+  $(this).on("blur", function() {
+    var input_value_username = $("#username").val();
+    var input_type = $(this).data("type");
+    var feedback = $(".invalid-feedbackusername");
 
-         $(this).on('blur', function(){  
-              var input_value_username = $('#username').val();  
-              var input_value_email = $('#email').val(); 
-              var input_type = $(this).data("type");  
-              var feedback = $('.invalid-feedback'); 
+    if (input_value_username == "") {
+      feedback.html("* Required Field Username");
+    } else {
+      //feedback.html("");
+      $("#username").removeClass();
+      $("#username").addClass("input_check form-control form-control-lg");
+      $.ajax({
+        url: "check.php",
+        method: "POST",
+        data: { input_value: input_value_username, input_type: input_type },
+        success: function(data) {
+            if($.trim(data) === "Username Exsit"){
+                $("#username").addClass("is-invalid");
+                feedback.html(data);
+            }if($.trim(data) === "valid"){
+                $("#username").addClass("is-valid");
+                
+            }
             
-              if(input_value_username == '')  
-              {  
-                   feedback.html("* Required Field Username");  
-              }
-             else
-              {  
-                   feedback.html("");  
-                   $.ajax({  
-                        url:"check.php",  
-                        method:"POST",  
-                        data:{input_value:input_value_username, input_type:input_type},  
-                        success:function(data)  
-                        {  
-                             feedback.html(data);  
-                        },  
-                        error:function(){  
-                             //Something went wrong  
-                        }  
-                   });  
-              }  
-         });  
-   
-}  
+        },
+        error: function(data) {
+          //Something went wrong
+
+          feedback.html(data);
+        }
+      });
+    }
+  });
+};

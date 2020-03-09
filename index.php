@@ -5,7 +5,7 @@
     <title>How to make Jquery Plugin</title>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
-        .input_check_message {
+        .invalid-feedbackusername {
             color: #FF0000;
         }
     </style>
@@ -39,8 +39,8 @@
                         </div>
                         <div class="form-group">
                             <label for='username'>Username: <sup>*</sup></label>
-                            <input type='text' id="username" name="username" value="" class=" input_check form-control form-control-lg is-invalid " data-type="username">
-                            <span class="invalid-feedback"></span>
+                            <input type='text' id="username" name="username" value="" class=" input_check form-control form-control-lg  " data-type="username">
+                            <span class="invalid-feedbackusername"></span>
                         </div>
                         <div class="form-group">
                             <label for='email'>Email: <sup>*</sup></label>
