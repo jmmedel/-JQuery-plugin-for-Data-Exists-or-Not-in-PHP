@@ -8,7 +8,7 @@ $.fn.availibilityCheck = function() {
     if (input_value_username == "") {
       feedback.html("* Required Field Username");
     } else {
-      //feedback.html("");
+     
       $("#username").removeClass();
       $("#username").addClass("input_check form-control form-control-lg");
       $.ajax({
@@ -16,10 +16,12 @@ $.fn.availibilityCheck = function() {
         method: "POST",
         data: { input_value: input_value_username, input_type: input_type },
         success: function(data) {
-            if($.trim(data) === "Username Exsit"){
+            if($.trim(data) === "Username Exist"){
                 $("#username").addClass("is-invalid");
+                feedback.html("");
                 feedback.html(data);
             }if($.trim(data) === "valid"){
+                feedback.html("");
                 $("#username").addClass("is-valid");
                 
             }
